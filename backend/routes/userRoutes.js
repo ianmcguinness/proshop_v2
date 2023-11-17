@@ -14,17 +14,17 @@ import {
 
 const router = express.Router()
 
-router.route('/').get(protect, admin, getUsers).post(registerUser)
+router
+  .route('/profile')
+  .get(protect, getUserProfile)
+  .put(protect, updateUserProfile)
 router
   .route('/:id')
   .get(protect, admin, getUserById)
   .put(protect, admin, updateUser)
   .delete(protect, admin, deleteUser)
-router
-  .route('/profile')
-  .get(protect, getUserProfile)
-  .put(protect, updateUserProfile)
 router.post('/auth', authUser)
 router.post('/logout', protect, logoutUser)
+router.route('/').get(protect, admin, getUsers).post(registerUser)
 
 export default router
