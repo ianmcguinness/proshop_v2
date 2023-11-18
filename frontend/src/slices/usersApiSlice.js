@@ -1,4 +1,4 @@
-import { apiSlice } from '@reduxjs/toolkit/query/react'
+import { apiSlice } from './apiSlice'
 import { USERS_URL } from '../constants/constants'
 
 export const usersApiSlice = apiSlice.injectEndpoints({
