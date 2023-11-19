@@ -23,7 +23,6 @@ const PlaceOrderScreen = () => {
     totalPrice
   } = useSelector(state => state.cart)
   const user = useSelector(state => state.auth.userInfo._id)
-  console.log(user)
   useEffect(() => {
     if (!shippingAddress.address) navigate('/shipping')
     if (!paymentMethod) navigate('/payment')
