@@ -5,21 +5,59 @@ import asyncHandler from '../middleware/asyncHandler.js'
 // @route  POST /api/orders
 // @access Private
 export const createOrder = asyncHandler(async (req, res) => {
-  res.send('Create Order')
+  const {
+    orderItems,
+    shippingAddress,
+    paymentMethod,
+    itemsPrice,
+    taxPrice,
+    shippingPrice,
+    totalPrice
+  } = req.body
+  if (orderItems && orderItems.length === 0) {
+    res.status(400)
+    throw new Error('No order Items')
+  } else {
+    const order = await Order.create({
+      orderItems: orderItems.map(item => ({
+        ...item,
+        product: item._id,
+        _id: undefined
+      })),
+      shippingAddress,
+      paymentMethod,
+      itemsPrice,
+      taxPrice,
+      shippingPrice,
+      totalPrice,
+      user: req.user._id
+    })
+    res.status(201).json(order)
+  }
 })
 
 // @desc   Get Logged in User's orders
 // @route  GET /api/orders/my-orders
 // @access Private
 export const getMyOrders = asyncHandler(async (req, res) => {
-  res.send('Get My Orders')
+  const orders = await Order.find({ user: req.user._id })
+  res.status(200).json(orders)
 })
 
 // @desc   Get Order by ID
 // @route  GET /api/orders/:id
 // @access Private
 export const getOrderById = asyncHandler(async (req, res) => {
-  res.send('Get Order by ID')
+  const order = await Order.findById(req.params.id).populate(
+    'user',
+    'name email'
+  )
+  if (order) {
+    res.status(200).json(order)
+  } else {
+    res.status(404)
+    throw new Error('Order not found')
+  }
 })
 
 // @desc   Update Order to Paid
