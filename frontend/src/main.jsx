@@ -15,6 +15,7 @@ import CartScreen from './screens/CartScreen.jsx'
 import LoginScreen from './screens/LoginScreen.jsx'
 import RegisterScreen from './screens/RegisterScreen.jsx'
 import ShippingScreen from './screens/ShippingScreen.jsx'
+import PaymentScreen from './screens/PaymentScreen.jsx'
 import PrivateRoute from './components/PrivateRoute.jsx'
 import './assets/styles/bootstrap.custom.css'
 import './assets/styles/index.css'
@@ -25,6 +26,7 @@ const router = createBrowserRouter(
       <Route path='' element={<PrivateRoute />}>
         {/* Private Routes go here */}
         <Route path='/shipping' element={<ShippingScreen />} />
+        <Route path='/payment' element={<PaymentScreen />} />
       </Route>
       <Route index path='/' element={<HomeScreen />} />
       <Route path='/products/:id' element={<ProductScreen />} />
